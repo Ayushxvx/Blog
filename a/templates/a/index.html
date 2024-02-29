@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navitems {
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .navitems:hover {
+            color: #8a8a8a;
+        }
+
+        #sbutton {
+            color: white;
+            background-color: #7e57c2;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #sbutton:hover {
+            background-color: #6a1b9a;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .post {
+            background-color: #fff;
+            color: #333;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #7e57c2;
+            font-size: 24px;
+        }
+
+        h4 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        h5, h6 {
+            margin-bottom: 10px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #7e57c2;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #6a1b9a;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="/"><span class="navitems">Blog</span></a>
+    <a href="mailto:ayushrve@gmail.com"><span class="navitems">Report Blog</span></a>
+    {% if user.is_authenticated %}
+        <span class="navitems">Hello : {{request.user.first_name}}</span>
+        <a href="/addpost"><span class="navitems">Add Blog</span></a>
+        <a href="/logout"><span class="navitems">Logout</span></a>
+    {% else %}
+        <a href="/login"><span class="navitems">Login</span></a>
+        <a href="/register"><span class="navitems">Register</span></a>
+    {% endif %}
+</nav>
+<div class="container">
+    {% for p in posts %}
+        <div class="post">
+            <a href="{% url 'specific' id=p.id %}">
+                <h2>{{p.title}}</h2>
+            </a>
+            <h4>{{p.content}}</h4>
+            <h5> -- {{p.author}}</h5>
+            <h6> -- {{p.created_at}}</h6>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>
